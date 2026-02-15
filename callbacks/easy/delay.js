@@ -6,7 +6,17 @@
 // with `null` as the first argument and the provided value as the second argument.
 
 function delay(ms, value, callback) {
-   
+  setTimeout(() => {
+    callback(null, value);
+  }, ms);
 }
-  
+
+delay(5000, "test", (err, result) => {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log(result);
+  }
+});
+
 module.exports = delay;
