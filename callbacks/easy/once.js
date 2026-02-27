@@ -8,6 +8,26 @@
 
 function once(fn) {
 
+  let called = false;
+  let result;
+  let error;
+
+  return function (...args) {
+
+    const callback = args[args.length - 1];
+
+    if (called) {
+      return callback(error, result);
+    }
+
+    called = true;
+
+    fn(...args.slice(0, -1), (err, data) => {
+      error = err;
+      result = data;
+      callback(err, data);
+    });
+  };
 }
 
 module.exports = once;
